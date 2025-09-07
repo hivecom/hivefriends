@@ -62,12 +62,15 @@
     display: block;
     margin-top: 4px;
     margin-bottom: 4px;
+    text-align: left !important;
 
     p {
-      font-size: 1.2rem;
-      color: rgb(var(--color-error));
+      font-size: 1.2rem !important;
+      color: rgb(var(--color-error)) !important;
       display: block;
-      margin-bottom: 2px;
+      margin-bottom: 2px !important;
+      text-align: left !important;
+      font-weight: 500 !important;
 
       &:last-child {
         margin-bottom: 0;
