@@ -134,3 +134,8 @@ export function seedRndMinMax(min: number, max: number, seed: string) {
   max = Math.floor(max)
   return Math.floor(randomSeed(seed) * (max - min + 1)) + min
 }
+
+export const storageKeys = {
+  NEW_ALBUM_FROM_IMAGES: 'create_album_from_images',
+  TO_ALBUM_FROM_IMAGES: 'add_to_album_from_images',
+}

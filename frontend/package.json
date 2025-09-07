@@ -1,5 +1,6 @@
 {
   "name": "hi-friends",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
   "description": "A website for a bunch of friends all around the world cherishing moments spent together in form of albums.",

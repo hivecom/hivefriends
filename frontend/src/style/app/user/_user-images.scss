@@ -213,8 +213,8 @@
 
 .all-image-checkbox {
   position: absolute;
-  left: 5px;
-  top: 5px;
+  left: 8px;
+  top: 8px;
   z-index: 10;
 
   .form-checkbox.is-checked {
@@ -224,16 +224,15 @@
   }
 
   .form-checkbox input[type='checkbox'] + label {
-    @include radius(50%);
+    @include radius(4px);
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 23px;
+    height: 23px;
     text-align: center;
+    background-color: rgba(var(--color-background), 0.75);
 
     span.material-icons {
       color: #000;
-      filter: drop-shadow(1px 1px 2px#fff);
-      transform: translateY(1px);
     }
   }
 }
