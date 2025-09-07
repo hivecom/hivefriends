@@ -2,7 +2,7 @@
 import type { Album, ImageFile, NewAlbum } from '../../store/album'
 import type { User } from '../../store/user'
 import { clone, isEmpty } from 'lodash'
-import { computed, nextTick, onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onBeforeMount, onMounted, reactive, ref, useTemplateRef } from 'vue'
 import Button from '../../components/Button.vue'
 import InputCheckbox from '../../components/form/InputCheckbox.vue'
 import InputSelect from '../../components/form/InputSelect.vue'
@@ -18,6 +18,7 @@ import { maxLength, required, useFormValidation } from '../../js/validation'
 import { imageUrl, useAlbums } from '../../store/album'
 import { useBread } from '../../store/bread'
 import { useLoading } from '../../store/loading'
+import { useToast } from '../../store/toast'
 import { useUser } from '../../store/user'
 
 const store = useAlbums()
@@ -59,6 +60,8 @@ const uploadPercentage = computed(
   () => ([...files.values].filter(item => item.key).length / rawFileLength.value) * 100,
 )
 const imageKeys = computed<Array<any>>(() => files.values.map(file => file.key).filter(item => item))
+
+const uploadImageItems = useTemplateRef('upload-items')
 
 /**
  * Lifecycle
@@ -180,26 +183,33 @@ const rules = computed(() => ({
 const { validate, errors } = useFormValidation(album, rules, { autoclear: true })
 
 async function submit() {
-  validate().then(async () => {
-    album.imageKeys = imageKeys.value
+  Promise.all(uploadImageItems.value!.map(item => item && item.saveImageMetadata()))
+    .then(() => {
+      validate().then(async () => {
+        album.imageKeys = imageKeys.value
 
-    const model = { ...album }
+        const model = { ...album }
 
-    // Assign properties which have to be formatted in some way or are not part of the origina form object
-    Object.assign(model, {
-      timeframe: {
-        from: new Date(album.timeframe.from).getTime() / 1000,
-        to: new Date(singleDate.value ? album.timeframe.from : album.timeframe.to).getTime() / 1000,
-      },
-      coverKey: album.coverKey ? album.coverKey : imageKeys.value[0],
-      taggedUsers: taggedUsers.value,
+        // Assign properties which have to be formatted in some way or are not part of the origina form object
+        Object.assign(model, {
+          timeframe: {
+            from: new Date(album.timeframe.from).getTime() / 1000,
+            to: new Date(singleDate.value ? album.timeframe.from : album.timeframe.to).getTime() / 1000,
+          },
+          coverKey: album.coverKey ? album.coverKey : imageKeys.value[0],
+          taggedUsers: taggedUsers.value,
+        })
+
+        const { key } = await store.addAlbum(model)
+
+        if (key)
+          albumKey.value = key
+      })
     })
-
-    const { key } = await store.addAlbum(model)
-
-    if (key)
-      albumKey.value = key
-  })
+    .catch(() => {
+      const toast = useToast()
+      toast.add('Failed saving metadata.', 'error')
+    })
 }
 
 /**
@@ -303,8 +313,10 @@ function dragCompare() {
           <ImageUploadItem
             v-for="(item, index) in files.values"
             :key="item.name"
-            :class="{ 'is-cover': item.key === album.coverKey, 'is-dragging-over': index === drag_over }"
+            ref="upload-items"
+            :class="{ 'is-dragging-over': index === drag_over }"
             :data="item"
+            :is-cover="item.key === album.coverKey"
             :index="index"
             @remove="delImage"
             @set-as-cover="(key: string) => album.coverKey = key"
@@ -370,7 +382,7 @@ function dragCompare() {
           <Button
             v-if="albumKey"
             style="margin-top: 32px"
-            class="btn-blue btn-icon"
+            class="btn-blue btn-icon w-100"
             :to="{ name: 'AlbumDetail', params: { id: albumKey } }"
           >
             View Album
@@ -380,8 +392,7 @@ function dragCompare() {
           <template v-else>
             <Button
               :class="{ 'btn-disabled': files.values.length === 0 || isLoading || !album.title }"
-              class="btn-icon btn-black"
-              style="width: 100%; margin-bottom: 20px"
+              class="btn-icon btn-black w-100"
               @click="submit"
             >
               {{ album.draft ? "Save Draft" : "Save Album" }}

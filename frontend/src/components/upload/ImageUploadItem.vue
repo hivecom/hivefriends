@@ -10,8 +10,6 @@ import { maxLength, minLength, required, useFormValidation } from '../../js/vali
 import { imageUrl, useAlbums } from '../../store/album'
 import { useUser } from '../../store/user'
 
-import Button from '../Button.vue'
-
 import InputCheckbox from '../form/InputCheckbox.vue'
 import InputText from '../form/InputText.vue'
 import InputTextarea from '../form/InputTextarea.vue'
