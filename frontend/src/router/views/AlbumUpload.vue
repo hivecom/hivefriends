@@ -8,26 +8,22 @@ import InputCheckbox from '../../components/form/InputCheckbox.vue'
 import InputSelect from '../../components/form/InputSelect.vue'
 import InputText from '../../components/form/InputText.vue'
 import InputTextarea from '../../components/form/InputTextarea.vue'
-import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 
+import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 import DraftItem from '../../components/upload/DraftItem.vue'
 import ImageUploadItem from '../../components/upload/ImageUploadItem.vue'
 import { upload } from '../../js/fetch'
+import { storageKeys } from '../../js/utils'
 import { maxLength, required, useFormValidation } from '../../js/validation'
 import { imageUrl, useAlbums } from '../../store/album'
 import { useBread } from '../../store/bread'
 import { useLoading } from '../../store/loading'
 import { useUser } from '../../store/user'
 
-const props = defineProps<Props>()
 const store = useAlbums()
 const user = useUser()
 const bread = useBread()
 const { addLoading, delLoading, getLoading } = useLoading()
-
-interface Props {
-  images?: string
-}
 
 /**
  * Setup
@@ -87,9 +83,11 @@ onMounted(() => {
 onBeforeMount(async () => {
   bread.set('Upload a new album')
 
-  if (props.images) {
+  const imagestToUpload = sessionStorage.getItem(storageKeys.ALBUM_FROM_IMAGES)
+
+  if (imagestToUpload && imagestToUpload !== '[]') {
     // Parse JSON of already existing images and assign them as if they were uploaded
-    const images = JSON.parse(props.images)
+    const images = JSON.parse(imagestToUpload)
 
     if (images.length > 0) {
       for (const image of images) {
@@ -102,6 +100,8 @@ onBeforeMount(async () => {
       }
     }
   }
+
+  sessionStorage.removeItem(storageKeys.ALBUM_FROM_IMAGES)
 
   addLoading('album-upload')
   await user.fetchUsers()

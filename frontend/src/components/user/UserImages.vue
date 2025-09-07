@@ -7,7 +7,7 @@ import { computed, onBeforeMount, provide, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useThresholdScroll } from '../../js/_composables'
 import { upload } from '../../js/fetch'
-import { formatDate } from '../../js/utils'
+import { formatDate, storageKeys } from '../../js/utils'
 import { imageUrl, useAlbums } from '../../store/album'
 import { useBread } from '../../store/bread'
 import { useLoading } from '../../store/loading'
@@ -111,12 +111,8 @@ async function deleteSelect() {
 
 // Create new album with selected images
 function createSelect() {
-  router.push({
-    name: 'Upload',
-    params: {
-      images: JSON.stringify([...selected.value.values()]),
-    },
-  })
+  sessionStorage.setItem(storageKeys.ALBUM_FROM_IMAGES, JSON.stringify([...selected.value.values()]))
+  router.push({ name: 'Upload' })
 }
 
 /**
