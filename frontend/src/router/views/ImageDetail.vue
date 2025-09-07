@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Map } from 'mapbox-gl'
+import type { ShallowRef } from 'vue'
 import type { Album, Image as ImageStruct } from '../../store/album'
 import { onKeyStroke, useClipboard, useCssVar, useMediaQuery, usePreferredDark, useScroll, whenever } from '@vueuse/core'
 import dayjs from 'dayjs'
@@ -26,7 +27,7 @@ import { useUser } from '../../store/user'
  *  Setup
  */
 const wrap = ref(null)
-const color = useCssVar('--color-highlight', wrap)
+const color = useCssVar('--color-highlight', wrap) as ShallowRef<string>
 const isPhone = useMediaQuery('(max-width: 512px)')
 const scrollWrap = ref<HTMLElement>()
 
