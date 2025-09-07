@@ -273,7 +273,11 @@ function dragCompare() {
 </script>
 
 <template>
-  <div class="hi-album-upload" :class="{ 'has-drafts': drafts && !isEmpty(drafts) }">
+  <div
+    id="drop-area" class="hi-album-upload" :class="{ 'has-drafts': drafts && !isEmpty(drafts) }"
+    @dragenter="draggingOver = true"
+    @mouseleave="draggingOver = false"
+  >
     <LoadingSpin v-if="getLoading('album-upload')" class="dark center-page" />
 
     <div v-if="drafts && !isEmpty(drafts)" class="album-drafts">
@@ -292,11 +296,9 @@ function dragCompare() {
         </div>
 
         <div
-          id="drop-area"
+
           class="album-drag-input"
           :class="{ hovering: draggingOver, empty: files.values.length === 0 }"
-          @dragenter="draggingOver = true"
-          @mouseleave="draggingOver = false"
         >
           <input id="draginput" name="draginput" type="file" multiple accept="image/*">
           <label for="draginput">

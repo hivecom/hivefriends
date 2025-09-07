@@ -293,18 +293,19 @@ onClickOutside(deletewrap, () => {
 </script>
 
 <template>
-  <div class="hi-album-upload album-edit">
+  <div
+    id="drop-area" class="hi-album-upload album-edit"
+    @dragenter="draggingOver = true"
+    @mouseleave="draggingOver = false"
+  >
     <LoadingSpin v-if="getLoading('edit')" class="center-page dark" />
 
     <!-- <template v-else-if="false"> no data </template> -->
     <div class="album-upload-layout">
       <div class="album-upload-items">
         <div
-          id="drop-area"
           class="album-drag-input"
           :class="{ hovering: draggingOver, empty: files.values.length === 0 }"
-          @dragenter="draggingOver = true"
-          @mouseleave="draggingOver = false"
         >
           <input id="draginput" name="draginput" type="file" multiple accept="image/*">
           <label for="draginput">
