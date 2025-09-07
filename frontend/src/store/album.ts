@@ -193,17 +193,10 @@ export const useAlbums = defineStore('album', {
 
     async saveImageMetadata(key: string, form: object) {
       const { addLoading, delLoading } = useLoading()
-      const toast = useToast()
 
       addLoading(key)
 
       return put(`/api/images/${key}`, form)
-        .then(() => {
-          toast.add('Updated image metadata', 'success')
-        })
-        .catch((error: FetchError) => {
-          toast.add(error.message, 'error')
-        })
         .finally(() => delLoading(key))
     },
 

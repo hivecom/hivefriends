@@ -8,7 +8,6 @@ import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 import { map_access, map_dark, map_light } from '../../js/map'
 import { maxLength, minLength, required, useFormValidation } from '../../js/validation'
 import { imageUrl, useAlbums } from '../../store/album'
-import { useLoading } from '../../store/loading'
 import { useUser } from '../../store/user'
 
 import Button from '../Button.vue'
@@ -21,9 +20,10 @@ import LoadingBar from '../loading/LoadingBar.vue'
 interface Props {
   data: any
   index: number
+  isCover: boolean
 }
 
-const { data, index } = defineProps<Props>()
+const { data, index, isCover } = defineProps<Props>()
 
 const emit = defineEmits<{
   (e: 'remove', index: number): void
@@ -32,7 +32,6 @@ const emit = defineEmits<{
 
 const user = useUser()
 const albums = useAlbums()
-const { getLoading } = useLoading()
 const isPhone = useMediaQuery('(max-width: 512px)')
 
 const originalCoords = reactive({} as { latitude: string, longitude: string })
@@ -96,7 +95,7 @@ const rules = computed(() => ({
 const { errors, validate } = useFormValidation(form, rules, { autoclear: true })
 
 async function submit() {
-  validate().then(() => {
+  return validate().then(() => {
     albums.saveImageMetadata(data.key, form)
   })
 }
@@ -132,10 +131,14 @@ const mapStyle = computed(() => {
     return usePreferredDark() ? map_dark : map_light
   return user.settings?.colorTheme?.startsWith('dark') ? map_dark : map_light
 })
+
+defineExpose({
+  saveImageMetadata: submit,
+})
 </script>
 
 <template>
-  <div class="album-upload-item" :class="{ 'open': open, 'has-error': data.error }" :draggable="open ? false : true">
+  <div class="album-upload-item" :class="{ 'open': open, 'has-error': data.error, 'is-cover': isCover }" :draggable="open ? false : true">
     <div class="album-upload-item-header" @click.self="open = !open">
       <button class="hover-bubble bubble-info">
         <span class="material-icons">&#xe945;</span>
@@ -149,7 +152,7 @@ const mapStyle = computed(() => {
 
       <span class="file-size">{{ isPhone ? "" : "Size:" }} {{ size() }}</span>
 
-      <span class="tag tag-blue">{{ isPhone ? "Cover" : "Album Cover" }}</span>
+      <span v-if="isCover" class="tag tag-blue">{{ isPhone ? "Cover" : "Album Cover" }}</span>
 
       <div class="flex-1" />
       <p v-if="data.error">
@@ -181,6 +184,15 @@ const mapStyle = computed(() => {
           <div class="map-title">
             <InputCheckbox v-model:check="usemap" />
             <h6>Location</h6>
+
+            <div class="divider" />
+
+            <InputCheckbox
+              :style="isCover ? { 'pointer-events': 'none' } : {}"
+              :check="isCover"
+              @update:check="(isChecked) => isChecked && emit('setAsCover', data.key)"
+            />
+            <h6>Album cover</h6>
           </div>
 
           <div v-if="usemap" class="map-wrapper">
@@ -193,28 +205,11 @@ const mapStyle = computed(() => {
               <MapboxMarker :lng-lat="[form.location.longitude, form.location.latitude]" />
             </MapboxMap>
           </div>
-
-          <div class="buttons">
-            <Button
-              class="btn-black"
-              type="submit"
-              :class="{ 'btn-disabled': getLoading(data.key) }"
-              @click.prevent="submit"
-            >
-              Save
-              <LoadingSpin v-if="getLoading(data.key)" />
-            </Button>
-
-            <Button class="btn-white" @click.prevent="emit('setAsCover', data.key)">
-              Set as album cover
-            </Button>
-          </div>
         </form>
 
-        <div>
+        <div class="hi-image-preview">
           <h6>Preview</h6>
           <img :src="imageUrl(data.key, 'medium')" alt=" ">
-          <!-- add preview? -->
         </div>
       </div>
     </div>

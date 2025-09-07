@@ -3,7 +3,7 @@ import type { Image, ImageFile, NewAlbum } from '../../store/album'
 import type { User } from '../../store/user'
 import { onClickOutside } from '@vueuse/core'
 import { clone } from 'lodash'
-import { computed, nextTick, onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onBeforeMount, onMounted, reactive, ref, useTemplateRef } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Button from '../../components/Button.vue'
 import InputCheckbox from '../../components/form/InputCheckbox.vue'
@@ -19,6 +19,7 @@ import { required, useFormValidation } from '../../js/validation'
 import { imageUrl, useAlbums } from '../../store/album'
 import { useBread } from '../../store/bread'
 import { useLoading } from '../../store/loading'
+import { useToast } from '../../store/toast'
 import { useUser } from '../../store/user'
 
 /**
@@ -31,6 +32,8 @@ const router = useRouter()
 const albums = useAlbums()
 const user = useUser()
 const bread = useBread()
+
+const uploadImageItems = useTemplateRef('upload-items')
 
 const _id = computed(() => route?.params?.id.toString() ?? null)
 const IS_OK = ref(false)
@@ -177,23 +180,32 @@ const rules = computed(() => ({
 const { validate, errors } = useFormValidation(album, rules)
 
 async function submit() {
-  validate().then(async () => {
-    album.imageKeys = imageKeys.value
+  // Validate all image metadata first
+  Promise.all(uploadImageItems.value!.map(item => item && item.saveImageMetadata()))
+    .then(() => {
+      // If metadata saving succeeded, go ahead
+      validate().then(async () => {
+        album.imageKeys = imageKeys.value
 
-    const model = { ...album }
+        const model = { ...album }
 
-    Object.assign(model, {
-      timeframe: {
-        from: new Date(album.timeframe.from).getTime() / 1000,
-        to: new Date(singleDate.value ? album.timeframe.from : album.timeframe.to).getTime() / 1000,
-      },
-      coverKey: album.coverKey ? album.coverKey : imageKeys.value[0],
+        Object.assign(model, {
+          timeframe: {
+            from: new Date(album.timeframe.from).getTime() / 1000,
+            to: new Date(singleDate.value ? album.timeframe.from : album.timeframe.to).getTime() / 1000,
+          },
+          coverKey: album.coverKey ? album.coverKey : imageKeys.value[0],
+        })
+
+        albums.editAlbum(key.value, model)
+
+        IS_OK.value = true
+      })
     })
-
-    albums.editAlbum(key.value, model)
-
-    IS_OK.value = true
-  })
+    .catch(() => {
+      const toast = useToast()
+      toast.add('Failed saving metadata.', 'error')
+    })
 }
 
 function getUserImageKey(name: string): string {
@@ -309,7 +321,9 @@ onClickOutside(deletewrap, () => {
           <ImageUploadItem
             v-for="(item, index) in files.values"
             :key="item.name"
-            :class="{ 'is-cover': item.key === album.coverKey, 'is-dragging-over': index === drag_over }"
+            ref="upload-items"
+            :class="{ 'is-dragging-over': index === drag_over }"
+            :is-cover="item.key === album.coverKey"
             :data="item"
             :index="index"
             @remove="delImage"
@@ -405,16 +419,12 @@ onClickOutside(deletewrap, () => {
           <div class="buttons" style="padding-top: 16px">
             <Button
               :class="{ 'btn-disabled': files.values.length === 0 || isLoading || !album.title }"
-              class="btn-icon btn-black"
+              class="btn-icon btn-black w-100"
               @click="submit"
             >
               Save Changes
               <LoadingSpin v-if="isLoading" class="dark" />
             </Button>
-
-          <!-- <Button class="btn-blue btn-icon" :to="{ name: 'AlbumDetail', params: { id: key } }">
-            View Album
-          </Button> -->
           </div>
         </div>
       </div>
