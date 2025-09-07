@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from 'vue'
 import type { ActivityItem } from '../../store/activity'
+import { computed, defineAsyncComponent } from 'vue'
 
 const props = defineProps<{ data: ActivityItem }>()
 

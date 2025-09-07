@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia'
-import { remove } from 'lodash'
-import { del, get, post, put, rootUrl } from '../js/fetch'
 import type { FetchError } from '../js/global-types'
+import { remove } from 'lodash'
+import { defineStore } from 'pinia'
+import { del, get, post, put, rootUrl } from '../js/fetch'
 import { query } from '../js/query'
+import { useFilters } from './filters'
 import { useLoading } from './loading'
 import { useToast } from './toast'
-import { useFilters } from './filters'
 
 export interface Image {
   key: string

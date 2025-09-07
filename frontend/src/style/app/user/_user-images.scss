@@ -76,7 +76,7 @@
         padding: 20px;
 
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           top: 0;
           left: 20px;
@@ -124,7 +124,7 @@
         @include radius(6px);
         pointer-events: none;
         border: 0px solid rgb(var(--color-highlight));
-        content: "";
+        content: '';
         display: block;
         position: absolute;
         inset: 0;
@@ -223,7 +223,7 @@
     }
   }
 
-  .form-checkbox input[type="checkbox"] + label {
+  .form-checkbox input[type='checkbox'] + label {
     @include radius(50%);
     justify-content: center;
     width: 36px;
@@ -297,7 +297,7 @@
         // background-color: rgba(var(--color-background-dark), 0.75);
 
         &:after {
-          content: "";
+          content: '';
           opacity: 1 !important;
           z-index: 1;
         }

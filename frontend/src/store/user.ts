@@ -1,8 +1,8 @@
+import type { FetchError } from '../js/global-types'
 import { defineStore } from 'pinia'
 import { get, post, put } from '../js/fetch'
-import type { FetchError } from '../js/global-types'
-import { useToast } from './toast'
 import { useLoading } from './loading'
+import { useToast } from './toast'
 
 export interface User {
   // key: string
@@ -48,7 +48,7 @@ export const useUser = defineStore('user', {
     public_token: undefined,
   } as State),
   actions: {
-    async signIn(credentials: { username: string; password: string }) {
+    async signIn(credentials: { username: string, password: string }) {
       const { addLoading, delLoading } = useLoading()
 
       addLoading('login')
@@ -159,7 +159,7 @@ export const useUser = defineStore('user', {
         })
     },
 
-    async changePassword(form: { old: string | number; new: string | number }) {
+    async changePassword(form: { old: string | number, new: string | number }) {
       const toast = useToast()
 
       return put('/api/settings/password', form)
@@ -177,7 +177,7 @@ export const useUser = defineStore('user', {
     getUser: state => (username: string, field?: string) => {
       const u
         = state.users.find(item => item.username === username)
-        || state.users.find(item => item.displayName === username)
+          || state.users.find(item => item.displayName === username)
       if (!u)
         return null
 

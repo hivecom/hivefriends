@@ -7,5 +7,5 @@ declare module '*.vue' {
   export default component
 }
 
-declare module "@dolanske/slider"
-declare module "dayjs"
+declare module '@dolanske/slider'
+declare module 'dayjs'

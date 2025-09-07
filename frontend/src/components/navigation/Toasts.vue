@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useToast } from "../../store/toast"
-import Toast from "./Toast.vue"
+import { useToast } from '../../store/toast'
+import Toast from './Toast.vue'
 
 const toast = useToast()
 </script>

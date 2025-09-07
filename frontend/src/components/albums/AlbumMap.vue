@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { usePreferredDark } from '@vueuse/core'
-import { MapboxMap, MapboxMarker } from 'vue-mapbox-ts'
 import type { Map } from 'mapbox-gl'
-import { isNil } from 'lodash'
-import { getBounds, isValidMarker, map_access, map_dark, map_light } from '../../js/map'
-import { useUser } from '../../store/user'
 import type { Album, Image } from '../../store/album'
-import { imageUrl } from '../../store/album'
-import { RGB_TO_HEX } from '../../js/utils'
-
+import { usePreferredDark } from '@vueuse/core'
+import { isNil } from 'lodash'
+import { computed, ref } from 'vue'
+import { MapboxMap, MapboxMarker } from 'vue-mapbox-ts'
 import CommentsWrap from '../../components/comments/CommentsWrap.vue'
+import { getBounds, isValidMarker, map_access, map_dark, map_light } from '../../js/map'
+import { RGB_TO_HEX } from '../../js/utils'
+import { imageUrl } from '../../store/album'
+
+import { useUser } from '../../store/user'
 
 interface Props {
   album: Album

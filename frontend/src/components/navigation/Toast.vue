@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
-import { Toast, useToast } from "../../store/toast"
-
-const { del } = useToast()
+import type { Toast } from '../../store/toast'
+import { onMounted } from 'vue'
+import { useToast } from '../../store/toast'
 
 const { data, index } = defineProps<{
   data: Toast
   index: number
 }>()
+
+const { del } = useToast()
 
 onMounted(() => {
   // Auto clear

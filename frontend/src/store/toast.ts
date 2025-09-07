@@ -1,6 +1,6 @@
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 
-export type Toast = {
+export interface Toast {
   text: string
   type?: string
   timeout?: number
@@ -10,15 +10,15 @@ interface State {
   items: Array<Toast>
 }
 
-export const useToast = defineStore("toast", {
+export const useToast = defineStore('toast', {
   state: () =>
     ({
-      items: []
+      items: [],
     } as State),
   actions: {
-    add(text: string, type: string = "info") {
+    add(text: string, type: string = 'info') {
       if (text) {
-        this.items.unshift({ text, type, timeout: type === "error" ? 6000 : 3000 })
+        this.items.unshift({ text, type, timeout: type === 'error' ? 6000 : 3000 })
       }
     },
     del(index: number) {
@@ -26,6 +26,6 @@ export const useToast = defineStore("toast", {
     },
     clear() {
       this.items = []
-    }
-  }
+    },
+  },
 })

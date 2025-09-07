@@ -1,11 +1,11 @@
-import { reactive, ref, watch, watchEffect } from "vue"
-import { isEmpty, isNil } from "lodash"
+import { isEmpty, isNil } from 'lodash'
+import { reactive, watch } from 'vue'
 
 /**
  * Types
  */
 
-export type Error = {
+export interface Error {
   type: string | null
   invalid: boolean
   errors: Set<string>
@@ -15,12 +15,12 @@ export interface Errors {
   [key: string]: Error
 }
 
-export type ValidationRule = {
+export interface ValidationRule {
   _validate: Function
   _message: Function
 }
 
-export type Rule = {
+export interface Rule {
   [key: string]: ValidationRule
 }
 
@@ -37,7 +37,7 @@ interface ValidationOptions {
 export function useFormValidation(
   form: object,
   rules: any,
-  { proactive = false, autoclear = false }: ValidationOptions = {}
+  { proactive = false, autoclear = false }: ValidationOptions = {},
 ) {
   const errors = reactive<Errors>({})
 
@@ -49,7 +49,7 @@ export function useFormValidation(
       () => {
         reset()
       },
-      { deep: true }
+      { deep: true },
     )
   }
 
@@ -59,7 +59,7 @@ export function useFormValidation(
       () => {
         validate()
       },
-      { deep: true }
+      { deep: true },
     )
   }
 
@@ -74,11 +74,11 @@ export function useFormValidation(
           [v]: {
             type: null,
             invalid: false,
-            errors: new Set()
-          }
+            errors: new Set(),
+          },
         }),
-        {}
-      )
+        {},
+      ),
     })
 
     Object.assign(root, { anyError: false, pending: false })
@@ -96,7 +96,8 @@ export function useFormValidation(
 
     return new Promise(async (resolve, reject) => {
       for (const [key, value] of Object.entries(form)) {
-        if (!Reflect.has(rules.value, key)) continue
+        if (!Reflect.has(rules.value, key))
+          continue
 
         const itemRules: Rule = rules.value[key]
 
@@ -118,7 +119,8 @@ export function useFormValidation(
 
       if (root.anyError) {
         reject(errors)
-      } else {
+      }
+      else {
         resolve(true)
       }
 
@@ -130,7 +132,7 @@ export function useFormValidation(
     errors,
     reset,
     validate,
-    status: root
+    status: root,
   }
 }
 
@@ -145,63 +147,65 @@ export const required = {
     return !isEmpty(value) && value.length > 0
   },
   _message() {
-    return "Value is required"
-  }
+    return 'Value is required'
+  },
 }
 
-export const minLength = (len: number) => {
+export function minLength(len: number) {
   return {
     _validate(value: any) {
-      if (isNil(value)) return false
+      if (isNil(value))
+        return false
 
       return value?.length ? value.length >= len : false
     },
     _message() {
       return `Value must be at least ${len} characters long`
-    }
+    },
   }
 }
 
-export const asyncValidation = (executable: Function) => {
+export function asyncValidation(executable: Function) {
   return {
     async _validate(value: any) {
       return await executable(value)
     },
     _message() {
-      return "not implemented"
-    }
+      return 'not implemented'
+    },
   }
 }
 
-export const maxLength = (len: number) => {
+export function maxLength(len: number) {
   return {
     _validate(value: any) {
-      if (isNil(value) || value.length === 0) return true
+      if (isNil(value) || value.length === 0)
+        return true
 
       return value?.length ? value.length <= len : false
     },
     _message() {
       return `Value must be equal or smaller than ${len} characters`
-    }
+    },
   }
 }
 
 export const email = {
   _validate(value: any) {
-    return /^\S+@\S+\.\S+$/.test(value)
+    return /^\S[^\s@]*@\S[^\s.]*\.\S+$/.test(value)
   },
   _message() {
-    return "Value must be in a valid email format"
-  }
+    return 'Value must be in a valid email format'
+  },
 }
 
-export const sameAs = (compared: any, leanient: boolean = false) => {
+export function sameAs(compared: any, leanient: boolean = false) {
   return {
     _validate(value: any) {
       return leanient ? value == compared : value === compared
     },
     _message() {
-      return "Values do not match"
-    }
+      return 'Values do not match'
+    },
   }
 }

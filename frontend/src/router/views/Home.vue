@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, ref } from 'vue'
+import type { Album } from '../../store/album'
 import dayjs from 'dayjs'
-import HomeUser from '../../components/user/HomeUser.vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import Activity from '../../components/activity/Activity.vue'
 
-import type { Album } from '../../store/album'
-import { imageUrl, useAlbums } from '../../store/album'
-import { useUser } from '../../store/user'
-import { useBread } from '../../store/bread'
-import { useActivity } from '../../store/activity'
-import { TEXT_CONTRAST, seedRndMinMax } from '../../js/utils'
 import LoadingSpin from '../../components/loading/LoadingSpin.vue'
+import HomeUser from '../../components/user/HomeUser.vue'
+import { seedRndMinMax, TEXT_CONTRAST } from '../../js/utils'
+import { useActivity } from '../../store/activity'
+import { imageUrl, useAlbums } from '../../store/album'
+import { useBread } from '../../store/bread'
+import { useUser } from '../../store/user'
 
 const user = useUser()
 const album = useAlbums()

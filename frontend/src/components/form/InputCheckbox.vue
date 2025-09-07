@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed } from 'vue'
 
 interface Props {
   label?: string
   check: boolean
 }
 
-const emit = defineEmits<{
-  (e: "update:check", value: boolean): void
-}>()
-
 const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (e: 'update:check', value: boolean): void
+}>()
 
 const data = computed<boolean>({
   get() {
     return props.check
   },
   set(value) {
-    emit("update:check", value)
-  }
+    emit('update:check', value)
+  },
 })
 
-const d = computed(() => "id" + Math.random().toString(16).slice(2))
+const d = computed(() => `id${Math.random().toString(16).slice(2)}`)
 </script>
 
 <template>
-  <div class="form-checkbox" :class="{'is-checked': check}">
-    <input type="checkbox" :name="d" :id="d" v-model="data" />
+  <div class="form-checkbox" :class="{ 'is-checked': check }">
+    <input :id="d" v-model="data" type="checkbox" :name="d">
     <label :for="d">
       <div class="icon">
         <span v-if="check" class="material-icons">&#xe834;</span>

@@ -1,13 +1,13 @@
 <script setup lang='ts'>
-import { computed, nextTick, onBeforeMount, ref } from 'vue'
-import dayjs from 'dayjs'
-import { vElementVisibility } from '@vueuse/components'
-import { useScroll, whenever } from '@vueuse/core'
-import { useActivity } from '../../store/activity'
 import type { ReducedImage } from '../../store/activity'
 import type { ImageItemInAlbum } from '../../store/album'
+import { vElementVisibility } from '@vueuse/components'
+import { useScroll, whenever } from '@vueuse/core'
+import dayjs from 'dayjs'
+import { computed, nextTick, onBeforeMount, ref } from 'vue'
 import UserUpload from '../../components/feed/UserUpload.vue'
 import { useThresholdScroll } from '../../js/_composables'
+import { useActivity } from '../../store/activity'
 
 const activity = useActivity()
 onBeforeMount(activity.fetchActivity)

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, computed } from "vue"
-import { Album, useAlbums } from "../../store/album"
-import { formatDate } from "../../js/utils"
-import { onClickOutside } from "@vueuse/core"
-import { useLoading } from "../../store/loading"
+import type { Album } from '../../store/album'
+import { onClickOutside } from '@vueuse/core'
+import { computed, ref } from 'vue'
+import { useAlbums } from '../../store/album'
+import { useLoading } from '../../store/loading'
 
 interface Props {
   data: Album
 }
 
+const props = defineProps<Props>()
 const albums = useAlbums()
 const { getLoading } = useLoading()
-const props = defineProps<Props>()
 const open = ref(false)
 const wrap = ref(null)
 
@@ -21,10 +21,10 @@ onClickOutside(wrap, () => {
 
 const timestamp = computed(() => {
   const d = new Date(props.data.publishedAt * 1000)
-  return d.toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric"
+  return d.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
   })
 })
 
@@ -66,7 +66,7 @@ async function deleteDraft() {
 
           Delete
 
-          <span class="material-icons rotate" v-if="getLoading('delete-album')">&#xe863;</span>
+          <span v-if="getLoading('delete-album')" class="material-icons rotate">&#xe863;</span>
         </button>
       </div>
     </div>

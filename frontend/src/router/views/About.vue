@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from "vue"
-import { useBread } from "../../store/bread"
+import { onBeforeMount } from 'vue'
+import { useBread } from '../../store/bread'
 
 const bread = useBread()
 
 onBeforeMount(() => {
-  bread.set("About the project")
+  bread.set('About the project')
 })
 </script>
 
@@ -18,16 +18,16 @@ onBeforeMount(() => {
         team called <a target="_blank" href="https://github.com/mavulp">Mavulp</a>. The goal of hi!friends is to create
         a centralized hub to share images of mostly real life gatherings, events and adventures we embark on together.
 
-        <br />
-        <br />
+        <br>
+        <br>
 
         Given the fact that we - the community behind Hivecom and it's further groups of friends - all grew up in
         different parts of the world and in the course of over 10 years found together through our shared interests,
         goals and quite simply bizarre circumstances; these albums can hold a lot of sentimental value that can only be
         described as a family bond.
 
-        <br />
-        <br />
+        <br>
+        <br>
         We'd like to share this bond between all of us, and all of you who might one day be a part of that too. In the
         meantime: we also do a lot of gaming together, want to join? Check out our site!
       </p>
@@ -38,7 +38,7 @@ onBeforeMount(() => {
           <p>https://hivecom.net/</p>
         </div>
 
-        <img src="https://hivecom.net/public/metaicon2.jpg" alt="" />
+        <img src="https://hivecom.net/public/metaicon2.jpg" alt="">
       </a>
 
       <!-- <hr /> -->
@@ -49,17 +49,17 @@ onBeforeMount(() => {
         <a target="_blank" href="https://github.com/Mavulp/hivefriends/issues">Github issue</a> or send us a message on
         <a target="_blank" href="https://discord.com/invite/Uh4WJ6vV">Discord</a> in the <strong>#chat</strong> channel.
       </p>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
 
       <h4>Support us</h4>
 
       <p>
         Running all the servers and storage adds to cost each month. We do all the financing out of our own pockets. If
-        you want to support us, feel free to donate a small amount <br />
+        you want to support us, feel free to donate a small amount <br>
         to our <a href="https://ko-fi.com/hivecom">ko-fi</a> or join our patreon.
       </p>
 
@@ -72,7 +72,7 @@ onBeforeMount(() => {
         <img
           src="https://i0.wp.com/jamesgarside.net/wp-content/uploads/2019/03/e04cb391687ead757f671bc977b9de83.jpg"
           alt=""
-        />
+        >
       </a>
 
       <p class="copyright">

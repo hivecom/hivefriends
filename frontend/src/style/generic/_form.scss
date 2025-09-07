@@ -11,7 +11,7 @@
 
   &.required {
     label:after {
-      content: "*";
+      content: '*';
       color: rgb(var(--color-error));
     }
   }
@@ -104,13 +104,13 @@ input:-webkit-autofill:active {
 
       &.required {
         label:after {
-          content: "*";
+          content: '*';
           color: rgb(var(--color-error));
         }
       }
     }
 
-    input[type="date"] {
+    input[type='date'] {
       height: 48px;
       line-height: 48px;
       font-size: 1.4rem;
@@ -123,7 +123,7 @@ input:-webkit-autofill:active {
 .form-wrap {
   display: block;
 
-  button[type="submit"] {
+  button[type='submit'] {
     width: 100%;
   }
 }
@@ -178,7 +178,7 @@ input:-webkit-autofill:active {
 }
 
 .form-checkbox {
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     display: none;
 
     & + label {
@@ -209,7 +209,7 @@ input:-webkit-autofill:active {
         &:before {
           @include t(0.15s);
           @include radius(50%);
-          content: "";
+          content: '';
           display: block;
           width: 34px;
           height: 34px;
@@ -240,7 +240,7 @@ input:-webkit-autofill:active {
 
   &.required {
     label:after {
-      content: "*";
+      content: '*';
       color: rgb(var(--color-error));
     }
   }

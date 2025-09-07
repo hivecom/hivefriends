@@ -1,16 +1,16 @@
 <script setup lang="ts">
+import type { Album } from '../../store/album'
 import { computed, onBeforeMount, ref } from 'vue'
 import AlbumListItem from '../../components/albums/AlbumListItem.vue'
-import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 
 // import Button from "../../components/Button.vue"
 import Search from '../../components/form/Search.vue'
 
-import type { Album } from '../../store/album'
-import { useAlbums } from '../../store/album'
-import { useLoading } from '../../store/loading'
-import { useBread } from '../../store/bread'
+import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 import { useThresholdScroll } from '../../js/_composables'
+import { useAlbums } from '../../store/album'
+import { useBread } from '../../store/bread'
+import { useLoading } from '../../store/loading'
 
 const { getLoading } = useLoading()
 

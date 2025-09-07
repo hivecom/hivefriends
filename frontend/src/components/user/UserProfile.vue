@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
+import type { Album } from '../../store/album'
+import type { User } from '../../store/user'
 import { useCssVar, useMediaQuery } from '@vueuse/core'
 import dayjs from 'dayjs'
-import LoadingSpin from '../loading/LoadingSpin.vue'
-import AlbumListItem from '../albums/AlbumListItem.vue'
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
 
-import type { User } from '../../store/user'
-import { useUser } from '../../store/user'
-import type { Album } from '../../store/album'
-import { imageUrl, useAlbums } from '../../store/album'
-import { TEXT_CONTRAST, flag, sanitize } from '../../js/utils'
-import { useLoading } from '../../store/loading'
 import countries from '../../js/countries'
-import { useBread } from '../../store/bread'
 import { normalDateFormat } from '../../js/time'
+import { flag, sanitize, TEXT_CONTRAST } from '../../js/utils'
+import { imageUrl, useAlbums } from '../../store/album'
+import { useBread } from '../../store/bread'
+import { useLoading } from '../../store/loading'
+import { useUser } from '../../store/user'
+import AlbumListItem from '../albums/AlbumListItem.vue'
+import LoadingSpin from '../loading/LoadingSpin.vue'
 
 const { addLoading, delLoading, getLoading } = useLoading()
 const users = useUser()

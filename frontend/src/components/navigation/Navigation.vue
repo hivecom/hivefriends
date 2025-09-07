@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { onClickOutside, useMediaQuery } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { onClickOutside, useMediaQuery } from '@vueuse/core'
-import { useUser } from '../../store/user'
-import { useBread } from '../../store/bread'
 import { imageUrl } from '../../store/album'
+import { useBread } from '../../store/bread'
+import { useUser } from '../../store/user'
 
 import Modal from '../Modal.vue'
 

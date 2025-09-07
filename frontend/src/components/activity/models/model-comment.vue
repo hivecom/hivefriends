@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 import type { Comment } from '../../../store/comments.js'
 import type { User } from '../../../store/user.js'
-import { useUser } from '../../../store/user.js'
-import { imageUrl, useAlbums } from '../../../store/album.js'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { formatTextImages, formatTextUsernames } from '../../../js/_composables'
 import { RGB_TO_HEX, sanitize } from '../../../js/utils'
+import { imageUrl, useAlbums } from '../../../store/album.js'
+import { useUser } from '../../../store/user.js'
 
 interface PropComment extends Comment {
   albumKey: string
@@ -44,7 +44,7 @@ function go() {
 </script>
 
 <template>
-  <div v-if="album" class="activity-item activity-comment" @click.self="go">
+  <div v-if="album" class="activity-item activity-comment" :style="{ '--color-highlight': author.accentColor }" @click.self="go">
     <div class="activity-title">
       <img
         class="user-image"

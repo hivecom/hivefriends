@@ -1,6 +1,6 @@
+import type { FetchError } from '../js/global-types'
 import { defineStore } from 'pinia'
 import { del, get, post } from '../js/fetch'
-import type { FetchError } from '../js/global-types'
 import { useLoading } from './loading'
 import { useToast } from './toast'
 
@@ -22,7 +22,7 @@ export const useComments = defineStore('comments', {
     comments: {},
   } as State),
   actions: {
-    async fetchComments({ albumKey, imageKey }: { albumKey: string; imageKey: string }, token?: string | string[]) {
+    async fetchComments({ albumKey, imageKey }: { albumKey: string, imageKey: string }, token?: string | string[]) {
       const { addLoading, delLoading } = useLoading()
 
       const commentListId = `comments-${albumKey}-${imageKey}`
@@ -49,7 +49,7 @@ export const useComments = defineStore('comments', {
         })
     },
 
-    async addComment({ albumKey, imageKey, text }: { albumKey: string; imageKey: string; text: string }) {
+    async addComment({ albumKey, imageKey, text }: { albumKey: string, imageKey: string, text: string }) {
       const { addLoading, delLoading } = useLoading()
 
       const commentListId = `comments-${albumKey}-${imageKey}`

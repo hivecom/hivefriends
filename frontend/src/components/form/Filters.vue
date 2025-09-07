@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, watch } from 'vue'
-import { isEmpty } from 'lodash'
 import type { Options } from '../../store/filters'
+import { isEmpty } from 'lodash'
+import { computed, onBeforeMount, onBeforeUnmount, watch } from 'vue'
 import { useFilters } from '../../store/filters'
 import { useLoading } from '../../store/loading'
 import { useUser } from '../../store/user'
 
-import LoadingSpin from '../loading/LoadingSpin.vue'
 import Button from '../Button.vue'
+import LoadingSpin from '../loading/LoadingSpin.vue'
 import InputSelect from './InputSelect.vue'
 
 const {
