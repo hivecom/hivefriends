@@ -10,9 +10,10 @@
       @include font(900);
       word-wrap: break-word;
       font-size: 2.2rem;
-      display: block;
+      display: inline-block;
       color: inherit;
       color: rgb(var(--color-text));
+      margin-left: 4px;
 
       &:hover {
         text-decoration: underline;
