@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { useMagicKeys, whenever } from "@vueuse/core"
-import { defineAsyncComponent, onBeforeMount, onBeforeUnmount, shallowRef } from "vue"
+import { useMagicKeys, whenever } from '@vueuse/core'
+import { onBeforeMount, onBeforeUnmount } from 'vue'
 
 const emit = defineEmits<{
-  (e: "close"): void
+  (e: 'close'): void
 }>()
 
 const keys = useMagicKeys()
-whenever(keys["Escape"], () => emit("close"))
+whenever(keys.Escape, () => emit('close'))
 
-const body = document.querySelector("body")
+const body = document.querySelector('body')
 
 onBeforeMount(() => {
-  if (body) body.style.overflowY = "hidden"
+  if (body)
+    body.style.overflowY = 'hidden'
 })
 
 onBeforeUnmount(() => {
-  if (body) body.style.overflowY = "unset"
+  if (body)
+    body.style.overflowY = 'unset'
 })
 </script>
 

@@ -1,8 +1,8 @@
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 
-export const useLoading = defineStore("loading", {
+export const useLoading = defineStore('loading', {
   state: () => ({
-    loading: new Set()
+    loading: new Set(),
   }),
   actions: {
     addLoading(...items: Array<string>) {
@@ -18,17 +18,17 @@ export const useLoading = defineStore("loading", {
           this.loading.delete(item)
         }
       }
-    }
+    },
   },
   getters: {
     getLoading:
-      (state) =>
-      (...items: Array<string>) => {
-        if (items.length > 0) {
-          return Array.from(state.loading).some((item: any) => items.includes(item))
-        }
+      state =>
+        (...items: Array<string>) => {
+          if (items.length > 0) {
+            return Array.from(state.loading).some((item: any) => items.includes(item))
+          }
 
-        return state.loading.size > 0
-      }
-  }
+          return state.loading.size > 0
+        },
+  },
 })

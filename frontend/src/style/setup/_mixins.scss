@@ -3,7 +3,7 @@
 //
 
 @function is-number($value) {
-  @return type-of($value) == "number";
+  @return type-of($value) == 'number';
 }
 
 //

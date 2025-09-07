@@ -8,30 +8,30 @@
     "dev:host": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@dolanske/slider": "github:dolanske/slider",
-    "@types/mapbox-gl": "^2.7.5",
-    "@vueuse/components": "^10.1.2",
-    "@vueuse/core": "^9.2.0",
-    "dayjs": "^1.11.8",
+    "@types/mapbox-gl": "^3.4.1",
+    "@vueuse/components": "^13.9.0",
+    "@vueuse/core": "^13.9.0",
+    "dayjs": "^1.11.18",
     "lodash": "^4.17.21",
-    "pinia": "^2.0.22",
-    "sass": "^1.54.9",
-    "vue": "^3.2.39",
-    "vue-mapbox-ts": "^0.9.3",
-    "vue-router": "^4.1.5"
+    "pinia": "^3.0.3",
+    "sass": "^1.92.1",
+    "vue": "^3.5.21",
+    "vue-mapbox-ts": "^0.9.10",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.3",
-    "@types/lodash": "^4.14.185",
-    "@vitejs/plugin-vue": "^3.1.0",
-    "eslint": "^8.41.0",
-    "typescript": "^4.8.3",
-    "vite": "^3.2.7",
-    "vitest": "^0.23.2",
-    "vue-tsc": "^0.40.13"
+    "@antfu/eslint-config": "^5.2.2",
+    "@types/lodash": "^4.17.20",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "eslint": "^9.35.0",
+    "eslint-plugin-format": "^1.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "vue-tsc": "^3.0.6"
   }
 }

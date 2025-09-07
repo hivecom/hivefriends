@@ -1,25 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import UserAlbums from '../components/user/UserAlbums.vue'
+import UserImages from '../components/user/UserImages.vue'
 import UserProfile from '../components/user/UserProfile.vue'
 import UserSettings from '../components/user/UserSettings.vue'
-import UserImages from '../components/user/UserImages.vue'
-import Login from './views/Login.vue'
-import Home from './views/Home.vue'
+// Navigation guards
+import beforeResolve from './guards/beforeResolve'
+import About from './views/About.vue'
+import Activity from './views/Activity.vue'
 import AlbumDetail from './views/AlbumDetail.vue'
-import ImageDetail from './views/ImageDetail.vue'
+import AlbumEdit from './views/AlbumEdit.vue'
 import AlbumList from './views/AlbumList.vue'
 import AlbumUpload from './views/AlbumUpload.vue'
-import AlbumEdit from './views/AlbumEdit.vue'
 
-import About from './views/About.vue'
 import Feed from './views/Feed.vue'
-import Activity from './views/Activity.vue'
+import Home from './views/Home.vue'
+import ImageDetail from './views/ImageDetail.vue'
 
 // Subchildren for user pages
 
-// Navigation guards
-import beforeResolve from './guards/beforeResolve'
+import Login from './views/Login.vue'
 
 /**
  * Router Setup

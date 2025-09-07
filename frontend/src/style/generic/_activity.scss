@@ -1,12 +1,6 @@
 .activity {
   @include t();
   @include flex($direction: column, $align: flex-start);
-  // position: fixed;
-  // top: $header;
-  // bottom: 0;
-  // right: 0;
-  // box-shadow: var(--shadow);
-  // border-left: 1px solid rgb(var(--color-border-light));
   background-color: rgb(var(--color-background));
   border: 1px solid rgb(var(--color-border-light));
 
@@ -351,7 +345,7 @@
 .activity-alert {
   @include radius(50%);
   @include t(0.1s);
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   pointer-events: none;

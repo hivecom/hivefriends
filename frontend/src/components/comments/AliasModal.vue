@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeMount } from "vue"
-import { useLoading } from "../../store/loading"
-import { get } from "../../js/fetch"
-import { isValidImage } from "../../js/utils"
+import { useMagicKeys, whenever } from '@vueuse/core'
+import { computed, onBeforeMount, ref } from 'vue'
+import { get } from '../../js/fetch'
+import { isValidImage } from '../../js/utils'
 
-import Search from "../form/Search.vue"
-import LoadingSpin from "../loading/LoadingSpin.vue"
-import { useMagicKeys, whenever } from "@vueuse/core"
+import { useLoading } from '../../store/loading'
+import Search from '../form/Search.vue'
+import LoadingSpin from '../loading/LoadingSpin.vue'
 
 const emit = defineEmits<{
-  (e: "close"): void
-  (e: "insert", alias: string): void
+  (e: 'close'): void
+  (e: 'insert', alias: string): void
 }>()
 
-type Alias = {
+interface Alias {
   name: string
   content: string
 }
@@ -21,12 +21,12 @@ type Alias = {
 const { addLoading, getLoading, delLoading } = useLoading()
 
 const list = ref<Array<Alias>>([])
-const search = ref("")
+const search = ref('')
 
 onBeforeMount(async () => {
-  addLoading("aliases")
-  list.value = await get("/api/aliases").then((data) => data)
-  delLoading("aliases")
+  addLoading('aliases')
+  list.value = await get('/api/aliases').then(data => data)
+  delLoading('aliases')
 })
 
 const filterList = computed<Array<Alias>>(() => {
@@ -38,13 +38,13 @@ const filterList = computed<Array<Alias>>(() => {
  */
 
 function emitInsert(name: string) {
-  emit("insert", name)
+  emit('insert', name)
   // emit("close")
 }
 
 const keys = useMagicKeys()
-whenever(keys["Escape"], () => {
-  emit("close")
+whenever(keys.Escape, () => {
+  emit('close')
 })
 </script>
 
@@ -71,10 +71,12 @@ whenever(keys["Escape"], () => {
             <template v-if="alias.name && alias.content">
               <button class="alias-item" @click="emitInsert(alias.name)">
                 <div class="alias-content">
-                  <div class="alias-image" v-if="isValidImage(alias.content)">
-                    <img :src="alias.content" alt="" load="lazy" lazyload="true" />
+                  <div v-if="isValidImage(alias.content)" class="alias-image">
+                    <img :src="alias.content" alt="" load="lazy" lazyload="true">
                   </div>
-                  <p v-else>{{ alias.content }}</p>
+                  <p v-else>
+                    {{ alias.content }}
+                  </p>
                 </div>
 
                 <span class="alias-name">!{{ alias.name }}</span>

@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeMount, onMounted, reactive, ref } from 'vue'
+import type { Album, ImageFile, NewAlbum } from '../../store/album'
+import type { User } from '../../store/user'
 import { clone, isEmpty } from 'lodash'
+import { computed, nextTick, onBeforeMount, onMounted, reactive, ref } from 'vue'
+import Button from '../../components/Button.vue'
+import InputCheckbox from '../../components/form/InputCheckbox.vue'
 import InputSelect from '../../components/form/InputSelect.vue'
 import InputText from '../../components/form/InputText.vue'
 import InputTextarea from '../../components/form/InputTextarea.vue'
-import ImageUploadItem from '../../components/upload/ImageUploadItem.vue'
-import Button from '../../components/Button.vue'
 import LoadingSpin from '../../components/loading/LoadingSpin.vue'
-import InputCheckbox from '../../components/form/InputCheckbox.vue'
-import DraftItem from '../../components/upload/DraftItem.vue'
 
+import DraftItem from '../../components/upload/DraftItem.vue'
+import ImageUploadItem from '../../components/upload/ImageUploadItem.vue'
 import { upload } from '../../js/fetch'
 import { maxLength, required, useFormValidation } from '../../js/validation'
-import type { Album, ImageFile, NewAlbum } from '../../store/album'
 import { imageUrl, useAlbums } from '../../store/album'
-import type { User } from '../../store/user'
-import { useUser } from '../../store/user'
-import { useLoading } from '../../store/loading'
 import { useBread } from '../../store/bread'
+import { useLoading } from '../../store/loading'
+import { useUser } from '../../store/user'
 
 const props = defineProps<Props>()
 const store = useAlbums()

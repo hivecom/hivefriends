@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive, ref, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { debounce, isEmpty } from 'lodash'
+import type { Album } from '../../store/album'
 import { useClipboard, useCssVar, useLocalStorage, usePreferredDark, whenever } from '@vueuse/core'
 import dayjs from 'dayjs'
-import type { Album } from '../../store/album'
-import { imageUrl, useAlbums } from '../../store/album'
+import { debounce, isEmpty } from 'lodash'
+import { computed, onBeforeMount, reactive, ref, watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import AlbumMap from '../../components/albums/AlbumMap.vue'
 
-import { useLoading } from '../../store/loading'
-import { useUser } from '../../store/user'
-import { useBread } from '../../store/bread'
-import { url } from '../../js/fetch'
-import { useToast } from '../../store/toast'
-
+import AlbumTimestamp from '../../components/albums/AlbumTimestamp.vue'
+import ImageListitem from '../../components/albums/ImageListitem.vue'
 import Detail from '../../components/Detail.vue'
-
 import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 import Modal from '../../components/Modal.vue'
-import AlbumMap from '../../components/albums/AlbumMap.vue'
-import { isValidMarker } from '../../js/map'
-import ImageListitem from '../../components/albums/ImageListitem.vue'
+
 import { formatTextUsernames } from '../../js/_composables'
-import { sanitize } from '../../js/utils'
+
+import { url } from '../../js/fetch'
+import { isValidMarker } from '../../js/map'
 import { normalDateFormat } from '../../js/time'
-import AlbumTimestamp from '../../components/albums/AlbumTimestamp.vue'
+import { sanitize } from '../../js/utils'
+import { imageUrl, useAlbums } from '../../store/album'
+import { useBread } from '../../store/bread'
+import { useLoading } from '../../store/loading'
+import { useToast } from '../../store/toast'
+import { useUser } from '../../store/user'
 
 const albums = useAlbums()
 const route = useRoute()
@@ -136,10 +136,6 @@ window.addEventListener(
 
 function scrollUp() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
-function scrollDown() {
-  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
 }
 
 whenever(showUsers, () => {

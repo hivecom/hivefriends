@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
 import type { Album } from '../../store/album'
+import { useRoute, useRouter } from 'vue-router'
 import { imageUrl } from '../../store/album'
 import { useUser } from '../../store/user'
 

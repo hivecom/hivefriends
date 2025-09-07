@@ -1,17 +1,17 @@
 <script setup lang="ts">
+import type { Album } from '../../store/album'
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import type { Album } from '../../store/album'
+import { useThresholdScroll } from '../../js/_composables'
 import { useAlbums } from '../../store/album'
+
+import { useBread } from '../../store/bread'
 import { useLoading } from '../../store/loading'
 
-import LoadingSpin from '../loading/LoadingSpin.vue'
-import AlbumListItem from '../albums/AlbumListItem.vue'
-
-import Search from '../form/Search.vue'
 import { useUser } from '../../store/user'
-import { useBread } from '../../store/bread'
-import { useThresholdScroll } from '../../js/_composables'
+import AlbumListItem from '../albums/AlbumListItem.vue'
+import Search from '../form/Search.vue'
+import LoadingSpin from '../loading/LoadingSpin.vue'
 
 const { getLoading } = useLoading()
 const store = useAlbums()

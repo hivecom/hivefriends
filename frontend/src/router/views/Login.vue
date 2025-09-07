@@ -1,46 +1,59 @@
 <script setup lang="ts">
-import InputText from "../../components/form/InputText.vue"
-import Button from "../../components/Button.vue"
-import LoadingSpin from "../../components/loading/LoadingSpin.vue"
+import { computed, nextTick, onBeforeMount, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Button from '../../components/Button.vue'
 
-import { ref, reactive, computed, nextTick, onBeforeMount } from "vue"
-import { getRanMinMax } from "../../js/utils"
-import { useUser } from "../../store/user"
-import { useFormValidation, required, minLength, asyncValidation } from "../../js/validation"
-import { useRouter } from "vue-router"
-import { useBread } from "../../store/bread"
-import { useLoading } from "../../store/loading"
+import InputText from '../../components/form/InputText.vue'
+import LoadingSpin from '../../components/loading/LoadingSpin.vue'
+import { getRanMinMax } from '../../js/utils'
+import { minLength, required, useFormValidation } from '../../js/validation'
+import { useBread } from '../../store/bread'
+import { useLoading } from '../../store/loading'
+import { useUser } from '../../store/user'
 
 const router = useRouter()
 const bread = useBread()
 const auth = useUser()
 const { getLoading } = useLoading()
 
-type SignInForm = {
+interface SignInForm {
   username: string
   password: string
 }
 
-const form = reactive<SignInForm>({ username: "", password: "" })
+const form = reactive<SignInForm>({ username: '', password: '' })
 
 const placeholders = [
-  "dolanspaghetti",
-  "tmtupomegranate",
-  "apjriehat",
-  "stormtrooper11",
-  "clobatenjoyer",
-  "quoteshater",
-  "zealseal",
-  "horse smeller",
-  "horselinman",
-  "cheessyman",
-  "_your_name_ (intense)",
-  "Slifblinger",
-  "gaming bed",
-  "sergeiy",
-  "checkmate"
+  'dolanspaghetti',
+  'tmtupomegranate',
+  'apjriehat',
+  'stormtrooper11',
+  'clobatenjoyer',
+  'quoteshater',
+  'zealseal',
+  'horse smeller',
+  'horselinman',
+  'cheessyman',
+  '_your_name_ (intense)',
+  'Slifblinger',
+  'gaming bed',
+  'sergeiy',
+  'checkmate',
 ]
 const placeholder = ref(placeholders[getRanMinMax(0, placeholders.length - 1)])
+
+const rules = computed(() => ({
+  username: {
+    required,
+  },
+  password: {
+    required,
+    minLength: minLength(3),
+  },
+}))
+
+// Setup validation
+const { errors, validate, reset } = useFormValidation(form, rules, { autoclear: true })
 
 async function submit() {
   validate()
@@ -51,42 +64,27 @@ async function submit() {
         reset()
 
         nextTick(() => {
-          router.push({ name: "Home" })
+          router.push({ name: 'Home' })
         })
       }
     })
-    .catch((errors) => {
-      // console.log("test", errors)
-    })
 }
 
-const rules = computed(() => ({
-  username: {
-    required
-  },
-  password: {
-    required,
-    minLength: minLength(3)
-  }
-}))
-
-// Setup validation
-const { errors, validate, reset } = useFormValidation(form, rules, { autoclear: true })
-
 onBeforeMount(async () => {
-  const r = document.querySelector(":root")
+  const r = document.querySelector(':root')
   if (r) {
-    r.classList.remove("dark-normal")
+    r.classList.remove('dark-normal')
   }
 
-  const token = localStorage.getItem("bearer_token")
-  const key = localStorage.getItem("user")
+  const token = localStorage.getItem('bearer_token')
+  const key = localStorage.getItem('user')
 
   if (token && key) {
     await auth.fetchUser(key)
-    router.push({ name: "Home" })
-  } else {
-    bread.set("Welcome to hi!friends")
+    router.push({ name: 'Home' })
+  }
+  else {
+    bread.set('Welcome to hi!friends')
   }
 })
 </script>
@@ -94,20 +92,22 @@ onBeforeMount(async () => {
 <template>
   <div class="route-login">
     <div class="route-login-split has-block">
-      <div class="block">Bunch of friends all around the world cherishing moments spent together.</div>
+      <div class="block">
+        Bunch of friends all around the world cherishing moments spent together.
+      </div>
     </div>
 
     <div class="route-login-split has-form">
-      <form @submit.prevent="submit" class="form-wrap">
-        <div class="loading-overlay" v-if="getLoading('login')">
+      <form class="form-wrap" @submit.prevent="submit">
+        <div v-if="getLoading('login')" class="loading-overlay">
           <LoadingSpin class="dark center-parent" />
         </div>
 
-        <img src="/Sharp2.png" alt=" " />
-        <InputText :error="errors.username" v-model:value="form.username" label="Username" :placeholder="placeholder" />
+        <img src="/Sharp2.png" alt=" ">
+        <InputText v-model:value="form.username" :error="errors.username" label="Username" :placeholder="placeholder" />
         <InputText
-          :error="errors.password"
           v-model:value="form.password"
+          :error="errors.password"
           label="Password"
           type="password"
           placeholder="***************"

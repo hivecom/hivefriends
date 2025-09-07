@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import dayjs from 'dayjs'
 import type { Comment } from '../../store/comments'
-import { useComments } from '../../store/comments'
-import { imageUrl } from '../../store/album'
-import { useUser } from '../../store/user'
-import { sanitize } from '../../js/utils'
+import dayjs from 'dayjs'
+import { computed } from 'vue'
 import { formatTextImages, formatTextUsernames } from '../../js/_composables'
 import { timeDateFormat } from '../../js/time'
+import { sanitize } from '../../js/utils'
+import { imageUrl } from '../../store/album'
+import { useComments } from '../../store/comments'
+import { useUser } from '../../store/user'
 
 const props = defineProps<Props>()
 const user = useUser()

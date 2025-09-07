@@ -1,15 +1,15 @@
 <script setup lang='ts'>
-import { computed, nextTick, onMounted, ref } from 'vue'
+import type { ImageItemInAlbum } from '../../store/album'
 import { Slider } from '@dolanske/slider'
 import dayjs from 'dayjs'
-import type { ImageItemInAlbum } from '../../store/album'
+import { computed, nextTick, onMounted, ref } from 'vue'
+import { timeDateFormat } from '../../js/time'
+import { formatFileSize } from '../../js/utils'
+
 import { imageUrl } from '../../store/album'
 import { useUser } from '../../store/user'
-
 import CommentsWrap from '../comments/CommentsWrap.vue'
 import Detail from '../Detail.vue'
-import { formatFileSize } from '../../js/utils'
-import { timeDateFormat } from '../../js/time'
 
 const props = defineProps<{
   images: ImageItemInAlbum[]

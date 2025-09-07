@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia'
-import { partition } from 'lodash'
-import { get, post } from '../js/fetch'
 import type { FetchError } from '../js/global-types'
+import type { Album, ImageItemInAlbum } from './album'
+import type { Comment } from './comments'
+import type { User } from './user'
+import { partition } from 'lodash'
+import { defineStore } from 'pinia'
+import { get, post } from '../js/fetch'
 import { padTo2Digits } from '../js/utils'
 import { useLoading } from './loading'
 import { useToast } from './toast'
-import type { Comment } from './comments'
-import type { Album, ImageItemInAlbum } from './album'
-import type { User } from './user'
 
 export interface ReducedImage {
   user: string
   images: ImageItemInAlbum[]
 }
 
-export type ActivityItem =
-  | {
+export type ActivityItem
+  = | {
     comment: Comment
   }
   | {

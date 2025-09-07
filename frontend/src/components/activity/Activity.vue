@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { onClickOutside, useMagicKeys, whenever } from '@vueuse/core'
-import { computed, ref, useAttrs, watch } from 'vue'
-import dayjs from 'dayjs'
 import type { ActivityItem as ActivityItemType } from '../../store/activity'
+import { onClickOutside, useMagicKeys, whenever } from '@vueuse/core'
+import dayjs from 'dayjs'
+import { computed, ref, useAttrs, watch } from 'vue'
+import { normalDateFormat } from '../../js/time'
 import { useActivity } from '../../store/activity'
 import { useAlbums } from '../../store/album'
-import { useLoading } from '../../store/loading'
 
+import { useLoading } from '../../store/loading'
 import LoadingSpin from '../loading/LoadingSpin.vue'
-import { normalDateFormat } from '../../js/time'
 import ActivityItem from './ActivityItem.vue'
 
 const props = defineProps<{

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
 import type { Comment } from '../../store/comments'
+import { computed, reactive, ref, watch } from 'vue'
+import { formatTextUsernames } from '../../js/_composables'
+import { sanitize } from '../../js/utils'
+import { minLength, required, useFormValidation } from '../../js/validation'
+import { useAlbums } from '../../store/album'
 import { useComments } from '../../store/comments'
 import { useLoading } from '../../store/loading'
-import { useUser } from '../../store/user'
-import { minLength, required, useFormValidation } from '../../js/validation'
-import { sanitize } from '../../js/utils'
-import { formatTextUsernames } from '../../js/_composables'
 
-import LoadingSpin from '../loading/LoadingSpin.vue'
+import { useUser } from '../../store/user'
 import InputTextarea from '../form/InputTextarea.vue'
-import { useAlbums } from '../../store/album'
-import CommentVue from './Comment.vue'
+import LoadingSpin from '../loading/LoadingSpin.vue'
 import AliasModal from './AliasModal.vue'
+import CommentVue from './Comment.vue'
 
 const props = defineProps<Props>()
 const emit = defineEmits<{

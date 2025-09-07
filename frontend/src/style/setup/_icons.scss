@@ -1,13 +1,15 @@
 @font-face {
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: local("Material Icons"), local("MaterialIconsOutlined-Regular"),
-    url("/icons/MaterialIconsOutlined-Regular.otf") format("opentype");
+  src:
+    local('Material Icons'),
+    local('MaterialIconsOutlined-Regular'),
+    url('/icons/MaterialIconsOutlined-Regular.otf') format('opentype');
 }
 
 .material-icons {
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
   font-size: 20px; /* Preferred icon size */
@@ -29,7 +31,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Support for IE. */
-  font-feature-settings: "liga";
+  font-feature-settings: 'liga';
 
   &.rotate {
     animation: rotate 3s infinite;

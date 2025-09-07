@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { MapboxMap, MapboxMarker } from 'vue-mapbox-ts'
 import type { Map } from 'mapbox-gl'
-import { computed, reactive, ref, watch } from 'vue'
 import { useMediaQuery, usePreferredDark } from '@vueuse/core'
 import { isEmpty } from 'lodash'
-import LoadingBar from '../loading/LoadingBar.vue'
-import Button from '../Button.vue'
-import InputText from '../form/InputText.vue'
-import InputTextarea from '../form/InputTextarea.vue'
+import { computed, reactive, ref, watch } from 'vue'
+import { MapboxMap, MapboxMarker } from 'vue-mapbox-ts'
 import LoadingSpin from '../../components/loading/LoadingSpin.vue'
-import InputCheckbox from '../form/InputCheckbox.vue'
-
 import { map_access, map_dark, map_light } from '../../js/map'
-
-import { imageUrl, useAlbums } from '../../store/album'
 import { maxLength, minLength, required, useFormValidation } from '../../js/validation'
+import { imageUrl, useAlbums } from '../../store/album'
 import { useLoading } from '../../store/loading'
 import { useUser } from '../../store/user'
+
+import Button from '../Button.vue'
+
+import InputCheckbox from '../form/InputCheckbox.vue'
+import InputText from '../form/InputText.vue'
+import InputTextarea from '../form/InputTextarea.vue'
+import LoadingBar from '../loading/LoadingBar.vue'
 
 interface Props {
   data: any
@@ -35,7 +35,7 @@ const albums = useAlbums()
 const { getLoading } = useLoading()
 const isPhone = useMediaQuery('(max-width: 512px)')
 
-const originalCoords = reactive({} as { latitude: string; longitude: string })
+const originalCoords = reactive({} as { latitude: string, longitude: string })
 
 const open = ref(false)
 function size() {

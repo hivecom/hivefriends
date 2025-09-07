@@ -7,7 +7,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
-  border-bottom: 1px solid rgb(var(--color-border-light));
+  // border-bottom: 1px solid rgb(var(--color-border-light));
   padding: 0 16px;
   padding-right: 24px;
   background-color: rgb(var(--color-background));
@@ -92,7 +92,7 @@
         font-size: 1.4rem;
 
         &:after {
-          content: "";
+          content: '';
           @include t();
           @include radius(6px);
           display: block;
@@ -162,7 +162,7 @@
 
       &:after {
         @include t(0.15s);
-        content: "";
+        content: '';
         border-radius: 2px;
         display: block;
         left: 50%;

@@ -1,13 +1,13 @@
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 
 interface State {
   title: null | string
 }
 
-export const useBread = defineStore("bread", {
+export const useBread = defineStore('bread', {
   state: () =>
     ({
-      title: null
+      title: null,
     } as State),
   actions: {
     set(value: any, title?: any) {
@@ -16,6 +16,6 @@ export const useBread = defineStore("bread", {
     },
     clear() {
       this.title = null
-    }
-  }
+    },
+  },
 })

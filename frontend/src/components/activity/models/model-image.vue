@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { take } from 'lodash'
-import { useRoute, useRouter } from 'vue-router'
-import { imageUrl } from '../../../store/album.js'
-import type { User } from '../../../store/user.js'
-import { useUser } from '../../../store/user.js'
 import type { ReducedImage } from '../../../store/activity'
+import type { User } from '../../../store/user.js'
+import { take } from 'lodash'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { RGB_TO_HEX } from '../../../js/utils'
+import { imageUrl } from '../../../store/album.js'
+import { useUser } from '../../../store/user.js'
 
 const props = defineProps<{ data: ReducedImage }>()
 const user = useUser()
 const router = useRouter()
-const route = useRoute()
 const data = computed(() => props.data)
 const author = computed<User>(() => user.getUser(data.value.user))
 const accent = computed(() => RGB_TO_HEX(author.value.accentColor))
@@ -30,7 +29,7 @@ function go(image: string, album: string) {
 </script>
 
 <template>
-  <div class="activity-item activity-image">
+  <div class="activity-item activity-image" :style="{ '--color-highlight': author.accentColor }">
     <div class="activity-title">
       <img
         class="user-image"
@@ -67,7 +66,7 @@ function go(image: string, album: string) {
 
 <style scoped lang="scss">
 .photo-list img.can-click {
-  outline: 0px solid v-bind("accent");
+  outline: 0px solid v-bind('accent');
   &:hover {
     outline-width: 3px;
   }

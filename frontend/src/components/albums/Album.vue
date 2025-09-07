@@ -18,13 +18,13 @@ const { large = false, data } = defineProps<Props>()
 <template>
   <div class="album" :class="{ 'album-large': large }">
     <div class="album-image">
-      <img src="https://jokler.xyz/f/yAPqRspK/png" alt=" " />
+      <img src="https://jokler.xyz/f/yAPqRspK/png" alt=" ">
     </div>
 
     <div class="album-title">
       <div class="album-timestamp">
         <span>{{ data.timestamps.from }}</span>
-        <div class="timestamp-divider"></div>
+        <div class="timestamp-divider" />
         <span>{{ data.timestamps.to }}</span>
       </div>
       <h2>{{ data.title }}</h2>

@@ -1,6 +1,6 @@
+import { useWindowScroll } from '@vueuse/core'
 // import { ImageItemInAlbum, Image } from "../store/album"
 import { computed } from 'vue'
-import { useWindowScroll } from '@vueuse/core'
 import { isValidImage } from './utils'
 
 /**
@@ -28,9 +28,7 @@ export function getImageChunks(images: Array<any>, columns = 3) {
   if (!images)
     return []
 
-  const makeArray = (cols: number) => Array.from(Array(cols).keys()).map(() => [])
-
-  const chunks: Array<Array<any>> = makeArray(columns)
+  const chunks: Array<Array<any>> = Array.from({ length: columns }).map(() => [])
 
   let i = 0
   let j = 0

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { computed, inject, onMounted, ref, watch } from 'vue'
-import { onClickOutside, useClipboard, useMagicKeys, whenever } from '@vueuse/core'
-import { useRouter } from 'vue-router'
 import type { Album, ImageItemInAlbum } from '../../store/album'
-import { imageUrl } from '../../store/album'
-import { get } from '../../js/fetch'
-import { useToast } from '../../store/toast'
-import { useUser } from '../../store/user'
-import { formatDate } from '../../js/utils'
-
-import LoadingSpin from '../loading/LoadingSpin.vue'
-import InputCheckbox from '../form/InputCheckbox.vue'
+import { onClickOutside, useClipboard, useMagicKeys, whenever } from '@vueuse/core'
+import { computed, inject, onMounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import Modal from '../../components/Modal.vue'
+import { get } from '../../js/fetch'
+import { formatDate } from '../../js/utils'
+import { imageUrl } from '../../store/album'
+import { useToast } from '../../store/toast'
+
+import { useUser } from '../../store/user'
+import InputCheckbox from '../form/InputCheckbox.vue'
+import LoadingSpin from '../loading/LoadingSpin.vue'
 
 interface Props {
   image: ImageItemInAlbum
@@ -43,7 +43,7 @@ onMounted(() => {
 })
 
 // @ts-expect-error idk
-const { imgIndex, setIndex } = inject<{ imgIndex: number; setIndex: (num: number) => void }>('image-index')
+const { imgIndex, setIndex } = inject<{ imgIndex: number, setIndex: (num: number) => void }>('image-index')
 const total = inject<number>('image-total')
 
 function imageClick() {

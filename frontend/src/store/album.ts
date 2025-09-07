@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia'
-import { remove } from 'lodash'
-import { del, get, post, put, rootUrl } from '../js/fetch'
 import type { FetchError } from '../js/global-types'
+import { remove } from 'lodash'
+import { defineStore } from 'pinia'
+import { del, get, post, put, rootUrl } from '../js/fetch'
 import { query } from '../js/query'
+import { useFilters } from './filters'
 import { useLoading } from './loading'
 import { useToast } from './toast'
-import { useFilters } from './filters'
 
 export interface Image {
   key: string
@@ -198,7 +198,7 @@ export const useAlbums = defineStore('album', {
       addLoading(key)
 
       return put(`/api/images/${key}`, form)
-        .then((res) => {
+        .then(() => {
           toast.add('Updated image metadata', 'success')
         })
         .catch((error: FetchError) => {
@@ -249,7 +249,7 @@ export const useAlbums = defineStore('album', {
       addLoading('edit-album-submit')
 
       return put(`/api/albums/${key}`, album)
-        .then((res) => {
+        .then(() => {
           toast.add('Successfully updated album', 'success')
         })
         .catch((error: FetchError) => {

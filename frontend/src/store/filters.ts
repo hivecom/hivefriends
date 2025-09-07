@@ -1,15 +1,14 @@
-import { isArray } from "lodash"
-import { defineStore } from "pinia"
-import { FetchError } from "../js/global-types"
-import { useLoading } from "./loading"
-import { useToast } from "./toast"
-import { get } from "../js/fetch"
-import { query } from "../js/query"
+import type { FetchError } from '../js/global-types'
+import { defineStore } from 'pinia'
+import { get } from '../js/fetch'
+import { query } from '../js/query'
+import { useLoading } from './loading'
+import { useToast } from './toast'
 
 export interface Options {
   authors?: string[]
   hasDrafts?: boolean
-  timeframes?: Array<{ from: number; to: number }>
+  timeframes?: Array<{ from: number, to: number }>
   years?: number[] | string[]
 }
 
@@ -18,11 +17,11 @@ interface Filters {
   available: Options
 }
 
-export const useFilters = defineStore("filters", {
+export const useFilters = defineStore('filters', {
   state: () =>
     ({
       active: {},
-      available: {}
+      available: {},
     } as Filters),
   actions: {
     clear() {
@@ -35,7 +34,7 @@ export const useFilters = defineStore("filters", {
     async fetchOptions(filters?: Options) {
       const { addLoading, delLoading } = useLoading()
 
-      addLoading("options")
+      addLoading('options')
 
       const q = query({ filters })
 
@@ -60,16 +59,16 @@ export const useFilters = defineStore("filters", {
         })
         .catch((error: FetchError) => {
           const toast = useToast()
-          toast.add(error.message, "error")
+          toast.add(error.message, 'error')
         })
         .finally(() => {
-          delLoading("options")
+          delLoading('options')
         })
-    }
+    },
   },
   getters: {
-    getAvailableFilters: (state) => (key: string) => Reflect.get(state.available, key) ?? [],
-    getActiveFilters: (state) => state.active,
-    getActiveFilter: (state) => (key: string) => Reflect.get(state.active, key) ?? []
-  }
+    getAvailableFilters: state => (key: string) => Reflect.get(state.available, key) ?? [],
+    getActiveFilters: state => state.active,
+    getActiveFilter: state => (key: string) => Reflect.get(state.active, key) ?? [],
+  },
 })
