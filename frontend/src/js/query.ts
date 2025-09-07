@@ -17,7 +17,7 @@ export function query(options: QueryOptions) {
   const { draft, filters } = options
 
   if (filters && !isEmpty(filters)) {
-    Object.entries(filters).map(([key, value]) => {
+    Object.entries(filters).forEach(([key, value]) => {
       if (key === 'years') {
         const sorted = value.map((year: any) => Number(year)).sort()
 

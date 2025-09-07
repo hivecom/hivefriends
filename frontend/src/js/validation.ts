@@ -16,8 +16,8 @@ export interface Errors {
 }
 
 export interface ValidationRule {
-  _validate: Function
-  _message: Function
+  _validate: (value?: any) => boolean
+  _message: (value?: string) => string
 }
 
 export interface Rule {
@@ -94,6 +94,7 @@ export function useFormValidation(
 
     root.pending = true
 
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve, reject) => {
       for (const [key, value] of Object.entries(form)) {
         if (!Reflect.has(rules.value, key))
@@ -165,7 +166,7 @@ export function minLength(len: number) {
   }
 }
 
-export function asyncValidation(executable: Function) {
+export function asyncValidation(executable: (value?: any) => Promise<boolean>) {
   return {
     async _validate(value: any) {
       return await executable(value)
@@ -202,7 +203,7 @@ export const email = {
 export function sameAs(compared: any, leanient: boolean = false) {
   return {
     _validate(value: any) {
-      return leanient ? value == compared : value === compared
+      return leanient ? value === compared : value === compared
     },
     _message() {
       return 'Values do not match'

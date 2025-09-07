@@ -61,7 +61,7 @@ export function formatFileSize(bytes: string | number, round?: boolean) {
   if (typeof bytes === 'string')
     bytes = Number(bytes)
 
-  if (isNaN(bytes))
+  if (Number.isNaN(bytes))
     return 0
 
   if (bytes / 1000000 > 1)

@@ -42,6 +42,19 @@ const placeholders = [
 ]
 const placeholder = ref(placeholders[getRanMinMax(0, placeholders.length - 1)])
 
+const rules = computed(() => ({
+  username: {
+    required,
+  },
+  password: {
+    required,
+    minLength: minLength(3),
+  },
+}))
+
+// Setup validation
+const { errors, validate, reset } = useFormValidation(form, rules, { autoclear: true })
+
 async function submit() {
   validate()
     .then(async () => {
@@ -55,23 +68,7 @@ async function submit() {
         })
       }
     })
-    .catch((errors) => {
-      // console.log("test", errors)
-    })
 }
-
-const rules = computed(() => ({
-  username: {
-    required,
-  },
-  password: {
-    required,
-    minLength: minLength(3),
-  },
-}))
-
-// Setup validation
-const { errors, validate, reset } = useFormValidation(form, rules, { autoclear: true })
 
 onBeforeMount(async () => {
   const r = document.querySelector(':root')

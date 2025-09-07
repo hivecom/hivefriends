@@ -24,7 +24,7 @@ function updateValue(e: any) {
     <label v-if="label">{{ label }}</label>
     <input v-bind="$attrs" tabindex="0" class="border-smoke font-14" :type="type" :value="value" @input="updateValue">
     <div v-if="error && error.invalid" class="input-error-list">
-      <p v-for="item in error.errors">
+      <p v-for="item in error.errors" :key="item">
         {{ item }}
       </p>
     </div>

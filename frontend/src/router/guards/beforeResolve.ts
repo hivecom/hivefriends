@@ -26,7 +26,7 @@ export default async function (to: RouteLocationNormalized, from: RouteLocationN
 
   // Lock user into album details & image detail routes
   if (auth.public_token) {
-    if (to.name == 'PublicImageDetail' || to.name == 'PublicAlbumDetail') {
+    if (to.name === 'PublicImageDetail' || to.name === 'PublicAlbumDetail') {
       if (token && key) {
         // This will only happen when a public album detail is loaded
         // but user has been logged in previously with a valid user & bearer token

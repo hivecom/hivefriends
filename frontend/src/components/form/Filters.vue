@@ -13,7 +13,6 @@ import InputSelect from './InputSelect.vue'
 const {
   disable = [],
   filters,
-  loading = false,
 } = defineProps<{
   disable?: Array<string>
   filters?: Options
@@ -41,9 +40,7 @@ function clear() {
 
 watch(
   () => filter.active,
-  (value) => {
-    emit('call')
-  },
+  () => emit('call'),
   { deep: true },
 )
 

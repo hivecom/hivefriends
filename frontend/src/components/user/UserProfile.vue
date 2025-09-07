@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ShallowRef } from 'vue'
 import type { Album } from '../../store/album'
 import type { User } from '../../store/user'
 import { useCssVar, useMediaQuery } from '@vueuse/core'
@@ -23,7 +24,9 @@ const albums = useAlbums()
 const bread = useBread()
 
 const wrap = ref(null)
-const color = useCssVar('--color-highlight', wrap)
+const color = useCssVar('--color-highlight', wrap, {
+  initialValue: '229, 125, 35',
+}) as ShallowRef<string>
 const isPhone = useMediaQuery('(max-width: 512px)')
 const _id = computed(() => route?.params?.user?.toString() ?? null)
 const userAlbums = ref<Array<Album>>([])
@@ -32,7 +35,6 @@ const imgheight = 512
 
 const user = computed<User>(() => users.users.find(item => item.username === _id.value) as User)
 const accent = computed(() => color.value.split(',').map(item => Number(item)))
-// const flag = ref()
 
 onBeforeMount(() => {
   addLoading('profile')

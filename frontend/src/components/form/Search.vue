@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useTemplateRef } from 'vue'
 
 const { value } = defineProps<Props>()
 
@@ -7,7 +7,7 @@ const emit = defineEmits<{
   (e: 'update:value', value: string): void
 }>()
 
-const input = ref(null)
+const input = useTemplateRef('input')
 
 interface Props {
   value: string | undefined | null
@@ -21,7 +21,6 @@ function clear() {
   emit('update:value', '')
 
   if (input.value) {
-    // @ts-ignore
     input.value.value = ''
   }
 }

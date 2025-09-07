@@ -1,6 +1,8 @@
+/* eslint-disable prefer-promise-reject-errors */
 import { merge } from 'lodash'
 
 export const rootUrl = 'https://friends.hivecom.net'
+// eslint-disable-next-line node/prefer-global/process
 export const url = process.env.NODE_ENV === 'development' ? 'localhost:3000' : rootUrl
 
 export function get(url: string, options?: object) {
@@ -108,6 +110,7 @@ async function _handleResponse(response: Response) {
         message = parsed.message
       }
       catch (e) {
+        void e
         message = text
       }
 

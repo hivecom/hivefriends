@@ -198,7 +198,7 @@ export const useAlbums = defineStore('album', {
       addLoading(key)
 
       return put(`/api/images/${key}`, form)
-        .then((res) => {
+        .then(() => {
           toast.add('Updated image metadata', 'success')
         })
         .catch((error: FetchError) => {
@@ -249,7 +249,7 @@ export const useAlbums = defineStore('album', {
       addLoading('edit-album-submit')
 
       return put(`/api/albums/${key}`, album)
-        .then((res) => {
+        .then(() => {
           toast.add('Successfully updated album', 'success')
         })
         .catch((error: FetchError) => {

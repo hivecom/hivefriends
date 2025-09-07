@@ -32,7 +32,7 @@ function updateValue(e: any) {
       @keydown="(e) => e.stopPropagation()"
     />
     <div v-if="error && error.invalid" class="input-error-list">
-      <p v-for="item in error.errors">
+      <p v-for="item in error.errors" :key="item">
         {{ item }}
       </p>
     </div>

@@ -293,21 +293,21 @@ const { scroll, passed } = useThresholdScroll(292)
 
           <template v-else-if="albums && !isEmpty(albums)">
             <router-link
-              v-for="album in albums"
-              :key="album.key"
+              v-for="albumItem in albums"
+              :key="albumItem.key"
               class="select-album-item"
               :to="{
                 name: 'AlbumEdit',
-                params: { id: album.key, images: JSON.stringify([...selected.values()]) },
+                params: { id: albumItem.key, images: JSON.stringify([...selected.values()]) },
               }"
             >
               <div class="album-item-image">
-                <img :src="imageUrl(album.coverKey, 'tiny')" alt="">
+                <img :src="imageUrl(albumItem.coverKey, 'tiny')" alt="">
               </div>
 
               <div class="album-item-meta">
-                <strong>{{ album.title }}</strong>
-                <p>Uploaded {{ formatDate(album.publishedAt) }}</p>
+                <strong>{{ albumItem.title }}</strong>
+                <p>Uploaded {{ formatDate(albumItem.publishedAt) }}</p>
               </div>
             </router-link>
           </template>
