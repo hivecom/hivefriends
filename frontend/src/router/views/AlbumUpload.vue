@@ -83,7 +83,7 @@ onMounted(() => {
 onBeforeMount(async () => {
   bread.set('Upload a new album')
 
-  const imagestToUpload = sessionStorage.getItem(storageKeys.ALBUM_FROM_IMAGES)
+  const imagestToUpload = sessionStorage.getItem(storageKeys.NEW_ALBUM_FROM_IMAGES)
 
   if (imagestToUpload && imagestToUpload !== '[]') {
     // Parse JSON of already existing images and assign them as if they were uploaded
@@ -101,7 +101,7 @@ onBeforeMount(async () => {
     }
   }
 
-  sessionStorage.removeItem(storageKeys.ALBUM_FROM_IMAGES)
+  sessionStorage.removeItem(storageKeys.NEW_ALBUM_FROM_IMAGES)
 
   addLoading('album-upload')
   await user.fetchUsers()

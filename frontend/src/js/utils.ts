@@ -136,5 +136,6 @@ export function seedRndMinMax(min: number, max: number, seed: string) {
 }
 
 export const storageKeys = {
-  ALBUM_FROM_IMAGES: 'album_from_images',
+  NEW_ALBUM_FROM_IMAGES: 'create_album_from_images',
+  TO_ALBUM_FROM_IMAGES: 'add_to_album_from_images',
 }

@@ -74,7 +74,7 @@ async function uploadImage(e: any) {
  * Image selecting
  */
 
-const selected = ref(new Map())
+const selected = ref<Map<string, Image>>(new Map())
 const selectMode = ref(false)
 
 function selectItem(item: Image) {
@@ -111,7 +111,7 @@ async function deleteSelect() {
 
 // Create new album with selected images
 function createSelect() {
-  sessionStorage.setItem(storageKeys.ALBUM_FROM_IMAGES, JSON.stringify([...selected.value.values()]))
+  sessionStorage.setItem(storageKeys.NEW_ALBUM_FROM_IMAGES, JSON.stringify([...selected.value.values()]))
   router.push({ name: 'Upload' })
 }
 
@@ -167,6 +167,13 @@ function getGroupDate(timestamp: number) {
 }
 
 const { scroll, passed } = useThresholdScroll(292)
+
+function saveAlbumToSession(images: Image[]) {
+  sessionStorage.setItem(
+    storageKeys.TO_ALBUM_FROM_IMAGES,
+    JSON.stringify(images),
+  )
+}
 </script>
 
 <template>
@@ -257,7 +264,7 @@ const { scroll, passed } = useThresholdScroll(292)
         <div class="image-group-title">
           <span>{{ getGroupDate(date) }}</span>
           <div class="flex-1" />
-          <span>{{ group.length }} {{ group.length === 1 ? 'image' : 'images' }}</span>
+          <span>{{ group.length }} {{ group.length === 1 ? 'photo' : 'photos' }}</span>
         </div>
 
         <div class="image-group-items">
@@ -294,8 +301,9 @@ const { scroll, passed } = useThresholdScroll(292)
               class="select-album-item"
               :to="{
                 name: 'AlbumEdit',
-                params: { id: albumItem.key, images: JSON.stringify([...selected.values()]) },
+                params: { id: albumItem.key },
               }"
+              @click="saveAlbumToSession([...selected.values()])"
             >
               <div class="album-item-image">
                 <img :src="imageUrl(albumItem.coverKey, 'tiny')" alt="">

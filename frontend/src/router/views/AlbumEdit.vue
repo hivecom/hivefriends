@@ -14,15 +14,13 @@ import InputTextarea from '../../components/form/InputTextarea.vue'
 import LoadingSpin from '../../components/loading/LoadingSpin.vue'
 import ImageUploadItem from '../../components/upload/ImageUploadItem.vue'
 import { upload } from '../../js/fetch'
+import { storageKeys } from '../../js/utils'
 import { required, useFormValidation } from '../../js/validation'
 import { imageUrl, useAlbums } from '../../store/album'
 import { useBread } from '../../store/bread'
 import { useLoading } from '../../store/loading'
 import { useUser } from '../../store/user'
 
-const props = defineProps<{
-  images?: string
-}>()
 /**
  * Setup
  */
@@ -148,8 +146,10 @@ function setupForm(_album: any) {
   if (_album.timeframe.from && _album.timeframe.to)
     singleDate.value = _album.timeframe.from === _album.timeframe.to
 
-  if (props.images)
-    _album.images.push(...JSON.parse(props.images))
+  const imagesToAdd = sessionStorage.getItem(storageKeys.TO_ALBUM_FROM_IMAGES)
+
+  if (imagesToAdd && imagesToAdd !== '[]')
+    _album.images.push(...JSON.parse(imagesToAdd))
 
   // Assign image files into an array
   _album.images.forEach((image: Image) => {
@@ -160,6 +160,8 @@ function setupForm(_album: any) {
       key: image.key,
     })
   })
+
+  sessionStorage.removeItem(storageKeys.TO_ALBUM_FROM_IMAGES)
 
   // Delete unwanted properties from the album
   delete _album.images
