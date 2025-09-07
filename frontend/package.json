@@ -8,8 +8,6 @@
     "dev:host": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
