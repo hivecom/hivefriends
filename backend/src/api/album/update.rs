@@ -22,11 +22,8 @@ pub struct PutAlbumRequest {
     pub description: Option<String>,
     #[serde(default, deserialize_with = "non_empty_str")]
     pub cover_key: Option<String>,
-    #[serde(default, deserialize_with = "non_empty_str")]
-    pub author: Option<String>,
     pub draft: Option<bool>,
     pub timeframe: Option<Timeframe>,
-    pub created_at: Option<u64>,
     pub image_keys: Option<Vec<String>>,
     pub tagged_users: Option<Vec<String>>,
 }

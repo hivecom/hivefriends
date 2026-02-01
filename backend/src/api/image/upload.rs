@@ -141,10 +141,10 @@ fn populate_metadata_from_exif(metadata: &mut DbImageMetadata, exif: &exif::Exif
         let mut long_deg = value_to_deg(&longitude.value);
 
         if lat_ref == "S" {
-            lat_deg = lat_deg.map(|d| d * -1.0);
+            lat_deg = lat_deg.map(|d| -d);
         }
         if long_ref == "W" {
-            long_deg = long_deg.map(|d| d * -1.0);
+            long_deg = long_deg.map(|d| -d);
         }
 
         if lat_deg.is_some() && long_deg.is_some() {

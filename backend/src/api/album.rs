@@ -373,10 +373,7 @@ fn author_filter_query(parameters: &mut Vec<Box<dyn ToSql>>, authors: Vec<String
 
     format!(
         "author IN ({}) ",
-        std::iter::repeat("?")
-            .take(len)
-            .collect::<Vec<_>>()
-            .join(",")
+        std::iter::repeat_n("?", len).collect::<Vec<_>>().join(",")
     )
 }
 

@@ -10,7 +10,6 @@ use serde::Deserialize;
 use serde_json::json;
 use serde_rusqlite::from_row;
 use thiserror::Error;
-use tracing::error;
 
 use std::sync::Arc;
 

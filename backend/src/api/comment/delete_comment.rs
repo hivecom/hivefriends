@@ -12,12 +12,6 @@ use crate::AppState;
 
 use super::Comment;
 
-#[derive(Eq, PartialEq, Debug, serde::Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DeleteCommentRequest {
-    id: u64,
-}
-
 pub(super) async fn delete(
     Path(comment_id): Path<i64>,
     Authorize(user): Authorize,
