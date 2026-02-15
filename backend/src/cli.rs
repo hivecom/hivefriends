@@ -8,7 +8,7 @@ use anyhow::{bail, Context};
 use argh::FromArgs;
 use rusqlite::params;
 use serde_rusqlite::from_row;
-use tracing::{error, info, warn};
+use tracing::{error, info, trace, warn};
 
 use crate::api::image::{orientation::ExifOrientation, DbImage};
 
@@ -135,7 +135,9 @@ pub async fn run_subcommand(
                 for name in &["full.jpg", "large.jpg", "medium.jpg", "tiny.jpg"] {
                     let mut rm_path = image_path.clone();
                     rm_path.push(name);
-                    std::fs::remove_file(rm_path)?;
+                    if let Err(e) = std::fs::remove_file(&rm_path) {
+                        error!(error = e.to_string(), path = ?rm_path, "Failed to remove file");
+                    }
                 }
 
                 image_path.push("original");
