@@ -1,4 +1,5 @@
 {
+  modulesPath,
   config,
   pkgs,
   lib,
@@ -44,6 +45,36 @@ in {
           type = types.package;
           default = pkgs.callPackage ../frontend/package.nix {};
           description = "Hivefriends web package";
+        };
+      };
+
+      nginx = {
+        enable = mkOption {
+          type = types.bool;
+          default = false;
+          description = ''
+            Whether to enable nginx virtual host management.
+            Further nginx configuration can be done by adapting <literal>services.nginx.virtualHosts.&lt;name&gt;</literal>.
+            See <xref linkend="opt-services.nginx.virtualHosts"/> for further information.
+          '';
+        };
+        virtualHost = mkOption {
+          type = types.submodule (
+            recursiveUpdate (import (modulesPath + "/services/web-servers/nginx/vhost-options.nix") {
+              inherit config lib;
+            }) {}
+          );
+          example = literalExpression ''
+            {
+              serverName = "hivefriends.example.org";
+              forceSSL = true;
+              enableACME = true;
+            }
+          '';
+          description = ''
+            Nginx configuration can be done by adapting `services.nginx.virtualHosts.<name>`.
+            See [](#opt-services.nginx.virtualHosts) for further information.
+          '';
         };
       };
     };
@@ -94,11 +125,13 @@ in {
       };
     };
 
-    services.nginx = {
+    services.nginx = mkIf cfg.nginx.enable {
       enable = true;
-      virtualHosts = {
-        "friends.hivecom.net" = {
-          root = "${cfg.web.package}/share/hivefriends";
+      virtualHosts.${cfg.nginx.virtualHost.serverName} = lib.mkMerge [
+        cfg.nginx.virtualHost
+        {
+          # NOTE: i'm not sure why but this does not work without settings a priority
+          root = lib.mkForce "${cfg.web.package}/share/hivefriends";
 
           locations = {
             "/" = {
@@ -118,8 +151,8 @@ in {
               '';
             };
           };
-        };
-      };
+        }
+      ];
     };
   };
 }
